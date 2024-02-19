@@ -60,4 +60,12 @@ public class Hand {
   public Collection<PlayingCard> getHand() {
     return this.hand;
   }
+
+  /**
+   * Checks the hand for a winning combination.
+   * 
+   */
+  public void checkHand() {
+    Collection<PlayingCard> checkHand = this.getHand();
+  }
 }
