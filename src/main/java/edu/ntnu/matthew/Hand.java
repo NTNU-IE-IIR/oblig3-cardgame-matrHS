@@ -6,6 +6,7 @@ import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
 public class Hand {
   private ArrayList<PlayingCard> hand;
+  private final char[] suits = { 'S', 'H', 'D', 'C' };
   
   public Hand() {
     this.hand = new ArrayList<PlayingCard>();
@@ -67,5 +68,16 @@ public class Hand {
    */
   public void checkHand() {
     Collection<PlayingCard> checkHand = this.getHand();
+    int[] suitCount = new int[4];
+    int[] faceCount = new int[13];
+    int pairs = 0;
+    int threes = 0;
+    int fours = 0;
+    int flush = 0;
+    
+    System.out.println("Pairs: " + pairs);
+    System.out.println("Threes: " + threes);
+    System.out.println("Fours: " + fours);
+    System.out.println("Flush: " + flush);
   }
 }

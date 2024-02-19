@@ -8,6 +8,7 @@ public class MainApp {
     DeckOfCards deck = new DeckOfCards();
     Hand hand = deck.dealHand(5);
     printCards(hand.getHand());
+    hand.checkHand();
   }
   
   public static void printCards(Collection<PlayingCard> cards) {
