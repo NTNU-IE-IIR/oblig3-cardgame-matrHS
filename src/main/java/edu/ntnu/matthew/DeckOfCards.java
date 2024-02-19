@@ -45,14 +45,14 @@ public class DeckOfCards {
    * @param n Number of cards to deal.
    * @return Collection of cards representing hand.
    */
-  public Collection<PlayingCard> dealHand(int n) {
-    Collection<PlayingCard> hand = new ArrayList<PlayingCard>();
+  public Hand dealHand(int n) {
+    Hand hand = new Hand();
     PlayingCard foundCard;
     Random random = new Random();
     
     for (int i = 0; i < n; i++) {
       foundCard = this.deck.get(random.nextInt(this.deck.size()));
-      hand.add(foundCard);
+      hand.addCard(foundCard);
       this.deck.remove(foundCard);
     }
     
