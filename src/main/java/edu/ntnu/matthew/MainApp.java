@@ -6,7 +6,8 @@ import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 public class MainApp {
   public static void main(String[] args) {
     DeckOfCards deck = new DeckOfCards();
-    printCards(deck.getDeck());
+    Collection<PlayingCard> hand = deck.dealHand(5);
+    printCards(hand);
   }
   
   public static void printCards(Collection<PlayingCard> cards) {

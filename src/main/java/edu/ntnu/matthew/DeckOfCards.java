@@ -2,6 +2,7 @@ package edu.ntnu.matthew;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
 /**
@@ -46,8 +47,14 @@ public class DeckOfCards {
    */
   public Collection<PlayingCard> dealHand(int n) {
     Collection<PlayingCard> hand = new ArrayList<PlayingCard>();
+    PlayingCard foundCard;
+    Random random = new Random();
     
-    
+    for (int i = 0; i < n; i++) {
+      foundCard = this.deck.get(random.nextInt(this.deck.size()));
+      hand.add(foundCard);
+      this.deck.remove(foundCard);
+    }
     
     return hand;
   }
