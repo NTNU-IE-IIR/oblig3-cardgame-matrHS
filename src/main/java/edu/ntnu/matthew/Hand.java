@@ -84,13 +84,21 @@ public class Hand {
       }
       faceCount[card.getFace()-1]++;
       
-      
-      
       checkedCards.add(card);
     }
+    
+    for (int suitTotal : suitCount) {
+      switch (suitTotal) {
+        case 5:
+          flush++;
+          break;
+        default:
+          break;
+      }
+    }
 
-    for (int faceNum : faceCount) {
-      switch (faceNum) {
+    for (int faceTotal : faceCount) {
+      switch (faceTotal) {
         case 2:
           pairs++;
           break;
