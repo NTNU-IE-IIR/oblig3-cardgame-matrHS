@@ -68,12 +68,42 @@ public class Hand {
    */
   public void checkHand() {
     Collection<PlayingCard> checkHand = this.getHand();
+    ArrayList<PlayingCard> checkedCards = new ArrayList<PlayingCard>();
     int[] suitCount = new int[4];
     int[] faceCount = new int[13];
     int pairs = 0;
     int threes = 0;
     int fours = 0;
     int flush = 0;
+    
+    for (PlayingCard card : checkHand) {
+      for (int i = 0; i < suits.length; i++) {
+        if (card.getSuit() == suits[i]) {
+          suitCount[i]++;
+        }
+      }
+      faceCount[card.getFace()-1]++;
+      
+      
+      
+      checkedCards.add(card);
+    }
+
+    for (int faceNum : faceCount) {
+      switch (faceNum) {
+        case 2:
+          pairs++;
+          break;
+        case 3:
+          threes++;
+          break;
+        case 4:
+          fours++;
+          break;
+        default:
+          break;
+      }
+    }
     
     System.out.println("Pairs: " + pairs);
     System.out.println("Threes: " + threes);
