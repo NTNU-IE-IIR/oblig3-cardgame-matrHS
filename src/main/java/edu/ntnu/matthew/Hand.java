@@ -75,6 +75,8 @@ public class Hand {
     int fours = 0;
     int flush = 0;
     
+    
+    
     System.out.println("Pairs: " + pairs);
     System.out.println("Threes: " + threes);
     System.out.println("Fours: " + fours);
