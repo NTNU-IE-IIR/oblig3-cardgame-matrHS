@@ -1,14 +1,12 @@
 package edu.ntnu.matthew;
 
+import edu.ntnu.matthew.UI.PokerCheck;
 import java.util.Collection;
 import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
 public class MainApp {
   public static void main(String[] args) {
-    DeckOfCards deck = new DeckOfCards();
-    Hand hand = deck.dealHand(5);
-    printCards(hand.getHand());
-    hand.checkHand();
+    PokerCheck.runApplication(args);
   }
   
   public static void printCards(Collection<PlayingCard> cards) {
