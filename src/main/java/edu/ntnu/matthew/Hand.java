@@ -2,6 +2,8 @@ package edu.ntnu.matthew;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
 public class Hand {
@@ -66,20 +68,36 @@ public class Hand {
    * Checks the hand for a winning combination.
    * 
    */
-  public void checkHand() {
+  public boolean checkHand() {
     Collection<PlayingCard> checkHand = this.getHand();
-    int[] suitCount = new int[4];
-    int[] faceCount = new int[13];
-    int pairs = 0;
-    int threes = 0;
-    int fours = 0;
-    int flush = 0;
     
+    int faceSum = checkHand
+        .stream()
+        .mapToInt((PlayingCard card) -> {
+          return card.getFace();
+        }).sum();
     
+    List<String> numHearts = checkHand
+        .stream()
+        .filter((PlayingCard card) -> {
+          return card.getSuit() == 'H';
+        }).map((PlayingCard card) -> {
+          return card.getAsString();
+        })
+        .collect(Collectors.toList());
     
-    System.out.println("Pairs: " + pairs);
-    System.out.println("Threes: " + threes);
-    System.out.println("Fours: " + fours);
-    System.out.println("Flush: " + flush);
+    boolean sQ = checkHand
+        .stream()
+        .anyMatch((PlayingCard card) -> {
+          return card.getSuit() == 'S' && card.getFace() == 12;
+        });
+    
+//    boolean flush = checkHand
+//        .stream()
+//        .collect(Collectors.groupingByConcurrent((PlayingCard card) -> {
+//          return card.getSuit();
+//        })).;
+    
+    return sQ;
   }
 }
