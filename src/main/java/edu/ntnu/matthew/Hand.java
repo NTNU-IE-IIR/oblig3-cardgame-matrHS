@@ -84,7 +84,7 @@ public class Hand {
         }).map((PlayingCard card) -> {
           return card.getAsString();
         })
-        .collect(Collectors.toList());
+        .toList();
     
     boolean sQ = checkHand
         .stream()
@@ -92,12 +92,11 @@ public class Hand {
           return card.getSuit() == 'S' && card.getFace() == 12;
         });
     
-//    boolean flush = checkHand
-//        .stream()
-//        .collect(Collectors.groupingByConcurrent((PlayingCard card) -> {
-//          return card.getSuit();
-//        })).;
+    boolean flush = checkHand
+        .stream()
+        .collect(Collectors.groupingBy(PlayingCard::getSuit,Collectors.counting()))
+        .containsValue(5);
     
-    return sQ;
+    return flush;
   }
 }
