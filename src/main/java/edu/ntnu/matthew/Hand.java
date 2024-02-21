@@ -3,6 +3,7 @@ package edu.ntnu.matthew;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
@@ -92,11 +93,11 @@ public class Hand {
           return card.getSuit() == 'S' && card.getFace() == 12;
         });
     
-    boolean flush = checkHand
-        .stream()
-        .collect(Collectors.groupingBy(PlayingCard::getSuit,Collectors.counting()))
-        .containsValue(5);
-    
-    return flush;
+//    
+//    boolean flush = checkHand
+//        .stream()
+//        .f
+//    
+    return sQ;
   }
 }
