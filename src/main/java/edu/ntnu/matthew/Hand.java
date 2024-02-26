@@ -93,11 +93,20 @@ public class Hand {
           return card.getSuit() == 'S' && card.getFace() == 12;
         });
     
-//    
-//    boolean flush = checkHand
-//        .stream()
-//        .f
-//    
-    return sQ;
+
+    boolean flush = checkHand
+        .stream()
+        .map((PlayingCard card) -> {
+          return card.getSuit();
+        })
+        .collect(Collectors.groupingBy((Character suit) -> {
+          return suit.charValue();
+        }, Collectors.counting()))
+        .values()
+        .stream()
+        .anyMatch(c -> c >= 5);
+        
+
+    return flush;
   }
 }
