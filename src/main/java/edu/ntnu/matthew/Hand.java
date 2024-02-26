@@ -3,7 +3,6 @@ package edu.ntnu.matthew;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
@@ -70,31 +69,22 @@ public class Hand {
    * 
    */
   public boolean checkHand() {
-    Collection<PlayingCard> checkHand = this.getHand();
     
-    int faceSum = checkHand
-        .stream()
-        .mapToInt((PlayingCard card) -> {
-          return card.getFace();
-        }).sum();
+    int faceSum = getSumOfHand();
+    List<String> numHearts = getHeartCards();
+    boolean sQ = checkSpadeQueen();
+    boolean flush = checkFlush();
     
-    List<String> numHearts = checkHand
-        .stream()
-        .filter((PlayingCard card) -> {
-          return card.getSuit() == 'H';
-        }).map((PlayingCard card) -> {
-          return card.getAsString();
-        })
-        .toList();
-    
-    boolean sQ = checkHand
-        .stream()
-        .anyMatch((PlayingCard card) -> {
-          return card.getSuit() == 'S' && card.getFace() == 12;
-        });
-    
+    return flush;
+  }
 
-    boolean flush = checkHand
+  /**
+   * Checks if the hand contains a flush.
+   * 
+   * @return True if the hand contains a flush, false otherwise.
+   */
+  public boolean checkFlush() {
+    return this.hand
         .stream()
         .map((PlayingCard card) -> {
           return card.getSuit();
@@ -105,8 +95,47 @@ public class Hand {
         .values()
         .stream()
         .anyMatch(c -> c >= 5);
-        
+  }
 
-    return flush;
+  /**
+   * Checks if the hand contains the queen of spades.
+   * 
+   * @return True if the hand contains the queen of spades, false otherwise.
+   */
+  public boolean checkSpadeQueen() {
+    return this.hand
+        .stream()
+        .anyMatch((PlayingCard card) -> {
+          return card.getSuit() == 'S' && card.getFace() == 12;
+        });
+  }
+
+  /**
+   * Takes in a collection of playing cards and returns the heart cards.
+   * 
+   * @return List of heart cards.
+   */
+  public List<String> getHeartCards() {
+    return this.hand
+        .stream()
+        .filter((PlayingCard card) -> {
+          return card.getSuit() == 'H';
+        }).map((PlayingCard card) -> {
+          return card.getAsString();
+        })
+        .toList();
+  }
+
+  /**
+   * Takes in a collection of playing cards and returns the sum of the cards.
+   * 
+   * @return The sum of the cards.
+   */
+  public int getSumOfHand() {
+    return this.hand
+        .stream()
+        .mapToInt((PlayingCard card) -> {
+          return card.getFace();
+        }).sum();
   }
 }
