@@ -46,6 +46,13 @@ public class DeckOfCards {
    * @return Collection of cards representing hand.
    */
   public Hand dealHand(int n) {
+    if (n < 0) {
+      throw new IllegalArgumentException("Number of cards to deal cannot be negative");
+    }
+    if (n > this.deck.size()) {
+      throw new IllegalArgumentException("Number of cards to deal cannot be greater than number of cards in deck");
+    }
+    
     Hand hand = new Hand();
     PlayingCard foundCard;
     Random random = new Random();

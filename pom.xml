@@ -38,7 +38,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass></mainClass>
+                    <mainClass>edu.ntnu.matthew.UI.PokerView</mainClass>
                 </configuration>
             </plugin>
         </plugins>

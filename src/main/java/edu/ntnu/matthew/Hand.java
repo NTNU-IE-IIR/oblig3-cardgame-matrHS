@@ -68,14 +68,13 @@ public class Hand {
    * Checks the hand for a winning combination.
    * 
    */
-  public boolean checkHand() {
+  public void checkHand() {
     
     int faceSum = getSumOfHand();
     List<String> numHearts = getHeartCards();
     boolean sQ = checkSpadeQueen();
     boolean flush = checkFlush();
     
-    return flush;
   }
 
   /**

@@ -1,10 +1,10 @@
 package edu.ntnu.matthew.UI;
 
-import edu.ntnu.matthew.DeckOfCards;
 import edu.ntnu.matthew.Hand;
 import edu.ntnu.matthew.PokerViewController;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -29,6 +30,7 @@ public class PokerView extends Application {
   String heartString;
   private PokerViewController pokerViewController;
   private FlowPane cards;
+  private Label deckSize;
   private Label sumResult;
   private Label sumHearts;
   private Label flushResult;
@@ -61,9 +63,25 @@ public class PokerView extends Application {
    * 
    * @param heartString The sum of hearts
    */
-  public void setHeartString(String heartString) {
-    this.heartString = heartString;
-    sumHearts.setText(heartString);
+  public void setHeartString(List<String> heartString) {
+    StringBuilder sb = new StringBuilder();
+    if (heartString.isEmpty()) {
+      sb.append("None");
+    }
+    for (String s : heartString) {
+      sb.append(s);
+      sb.append(" ");
+    }
+    sumHearts.setText(sb.toString());
+  }
+
+  /**
+   * Called when the sum of the hand is calculated.
+   *
+   * @param sumString The sum of the hand
+   */
+  public void setSumLabel(int sumString) {
+    this.sumResult.setText(String.valueOf(sumString));
   }
   
   /**
@@ -71,8 +89,8 @@ public class PokerView extends Application {
    * 
    * @param flushResult The result of the flush
    */
-  public void setFlushResult(String flushResult) {
-    this.flushResult.setText(flushResult);
+  public void setFlushResult(boolean flushResult) {
+    this.flushResult.setText(String.valueOf(flushResult));
   }
   
   /**
@@ -80,18 +98,21 @@ public class PokerView extends Application {
    * 
    * @param qSpadeResult The result of the queen of spades
    */
-  public void setQSpadeResult(String qSpadeResult) {
-    this.qSpadeResult.setText(qSpadeResult);
+  public void setQSpadeResult(boolean qSpadeResult) {
+    this.qSpadeResult.setText(String.valueOf(qSpadeResult));
   }
   
   /**
-   * Called when the sum of the hand is calculated.
+   * Called when the deck size is updated.
    * 
-   * @param sumString The sum of the hand
+   * @param deckSize The size of the deck
    */
-  public void setSumString(String sumString) {
-    this.sumString = sumString;
-    sumResult.setText(sumString);
+  public void updateDeckCount(int deckSize) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Deck size: ");
+    sb.append(deckSize);
+    sb.append(" / 52");
+    this.deckSize.setText(sb.toString());
   }
   
   @Override
@@ -118,6 +139,13 @@ public class PokerView extends Application {
     cardButtons.alignmentProperty().setValue(Pos.CENTER);
     cardButtons.setPadding(new Insets(8));
     mainLayout.setRight(cardButtons);
+
+    TextField handSize = new TextField();
+    handSize.setPromptText("Set hand size to deal");
+    cardButtons.getChildren().add(handSize);
+    handSize.setOnAction((ActionEvent event) -> {
+      pokerViewController.setHandSize(Integer.parseInt(handSize.getText()));
+    });
     
     Button deal = new Button("Deal Hand");
     deal.setMinWidth(90);
@@ -130,6 +158,12 @@ public class PokerView extends Application {
     Button check = new Button("Check hand");
     check.setMinWidth(90);
     cardButtons.getChildren().add(check);
+    check.setOnAction((ActionEvent event) -> {
+      pokerViewController.checkHand();
+    });
+    
+    deckSize = new Label("Deck size: 52 \\ 52" );
+    cardButtons.getChildren().add(deckSize);
     
     // Constructs the bottom bar
     VBox cardData = new VBox();
@@ -144,7 +178,7 @@ public class PokerView extends Application {
     topRow.getChildren().add(sum);
 
     sumString = "SUM";
-    Label sumResult = new Label(sumString);
+    sumResult = new Label(sumString);
     sumResult.styleProperty();
     topRow.getChildren().add(sumResult);
 
@@ -152,7 +186,7 @@ public class PokerView extends Application {
     topRow.getChildren().add(hearts);
 
     heartString = "CARDS"; 
-    Label sumHearts = new Label(heartString);
+    sumHearts = new Label(heartString);
     topRow.getChildren().add(sumHearts);
     
     HBox bottomRow = new HBox();
@@ -162,14 +196,14 @@ public class PokerView extends Application {
     Label flush = new Label("Flush? ");
     bottomRow.getChildren().add(flush);
 
-    Label flushResult = new Label("Y/N");
+    flushResult = new Label("Y/N");
     bottomRow.getChildren().add(flushResult);
 
 
     Label qSpade = new Label("Queen of Spade? ");
     bottomRow.getChildren().add(qSpade);
 
-    Label qSpadeResult = new Label("Y/N");
+    qSpadeResult = new Label("Y/N");
     bottomRow.getChildren().add(qSpadeResult);
     
     
