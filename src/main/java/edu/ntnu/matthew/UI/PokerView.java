@@ -1,37 +1,27 @@
 package edu.ntnu.matthew.UI;
 
-import com.sun.javafx.scene.control.InputField;
 import edu.ntnu.matthew.DeckOfCards;
 import edu.ntnu.matthew.Hand;
+import edu.ntnu.matthew.PokerViewController;
 import javafx.application.Application;
-import javafx.css.Style;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
-public class PokerCheck extends Application {
-  
-  DeckOfCards deck;
-  Hand hand;
-  
+public class PokerView extends Application {
   String sumString;
   String heartString;
-  
+  private PokerViewController pokerViewController;
   
   public static void runApplication(String[] args) {
     launch();
@@ -40,11 +30,7 @@ public class PokerCheck extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     
-    // Instantiates the poker deck
-    this.deck = new DeckOfCards();
-    
-    // Instantiates the poker hand
-    this.hand = new Hand();
+    pokerViewController = new PokerViewController(this);
     
     // Constructs the "main" BorderPane that all components get added to
     BorderPane mainLayout = new BorderPane();
@@ -70,7 +56,7 @@ public class PokerCheck extends Application {
     deal.setMinWidth(90);
     cardButtons.getChildren().add(deal);
     deal.setOnAction((ActionEvent event) -> {
-      this.dealCards();
+      pokerViewController.dealHand();
       
     });
     
@@ -113,6 +99,7 @@ public class PokerCheck extends Application {
     Label flushResult = new Label("Y/N");
     bottomRow.getChildren().add(flushResult);
 
+
     Label qSpade = new Label("Queen of Spade? ");
     bottomRow.getChildren().add(qSpade);
 
@@ -130,8 +117,6 @@ public class PokerCheck extends Application {
   
   
   
-  public void dealCards() {
-    this.hand = this.deck.dealHand(5);
-  }
+  
   
 }

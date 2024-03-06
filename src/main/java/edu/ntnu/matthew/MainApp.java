@@ -1,8 +1,7 @@
 package edu.ntnu.matthew;
 
-import edu.ntnu.matthew.UI.PokerCheck;
+import edu.ntnu.matthew.UI.PokerView;
 import java.util.Collection;
-import java.util.List;
 import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
 public class MainApp {
@@ -11,7 +10,7 @@ public class MainApp {
 //    Hand hand = deck.dealHand(10);
 //    printCards(hand.getHand());
 //    System.out.println(hand.checkHand());
-    PokerCheck.runApplication(args);
+    PokerView.runApplication(args);
   }
   
   
