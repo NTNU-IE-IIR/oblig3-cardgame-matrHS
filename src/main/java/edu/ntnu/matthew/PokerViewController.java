@@ -8,6 +8,7 @@ public class PokerViewController {
   private DeckOfCards deck;
   
   public PokerViewController(PokerView view) {
+    this.deck = new DeckOfCards();
     this.view = view;
   }
 
@@ -16,5 +17,10 @@ public class PokerViewController {
    */
   public void dealHand() {
     this.hand = this.deck.dealHand(5);
+    try {
+      this.view.addCardsToHand(this.hand);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
