@@ -2,6 +2,8 @@ package edu.ntnu.matthew;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import no.ntnu.idatx2003.oblig3.cardgame.PlayingCard;
 
 public class Hand {
@@ -67,55 +69,72 @@ public class Hand {
    * 
    */
   public void checkHand() {
-    Collection<PlayingCard> checkHand = this.getHand();
-    ArrayList<PlayingCard> checkedCards = new ArrayList<PlayingCard>();
-    int[] suitCount = new int[4];
-    int[] faceCount = new int[13];
-    int pairs = 0;
-    int threes = 0;
-    int fours = 0;
-    int flush = 0;
     
-    for (PlayingCard card : checkHand) {
-      for (int i = 0; i < suits.length; i++) {
-        if (card.getSuit() == suits[i]) {
-          suitCount[i]++;
-        }
-      }
-      faceCount[card.getFace()-1]++;
-      
-      checkedCards.add(card);
-    }
+    int faceSum = getSumOfHand();
+    List<String> numHearts = getHeartCards();
+    boolean sQ = checkSpadeQueen();
+    boolean flush = checkFlush();
     
-    for (int suitTotal : suitCount) {
-      switch (suitTotal) {
-        case 5:
-          flush++;
-          break;
-        default:
-          break;
-      }
-    }
+  }
 
-    for (int faceTotal : faceCount) {
-      switch (faceTotal) {
-        case 2:
-          pairs++;
-          break;
-        case 3:
-          threes++;
-          break;
-        case 4:
-          fours++;
-          break;
-        default:
-          break;
-      }
-    }
-    
-    System.out.println("Pairs: " + pairs);
-    System.out.println("Threes: " + threes);
-    System.out.println("Fours: " + fours);
-    System.out.println("Flush: " + flush);
+  /**
+   * Checks if the hand contains a flush.
+   * 
+   * @return True if the hand contains a flush, false otherwise.
+   */
+  public boolean checkFlush() {
+    return this.hand
+        .stream()
+        .map((PlayingCard card) -> {
+          return card.getSuit();
+        })
+        .collect(Collectors.groupingBy((Character suit) -> {
+          return suit.charValue();
+        }, Collectors.counting()))
+        .values()
+        .stream()
+        .anyMatch(c -> c >= 5);
+  }
+
+  /**
+   * Checks if the hand contains the queen of spades.
+   * 
+   * @return True if the hand contains the queen of spades, false otherwise.
+   */
+  public boolean checkSpadeQueen() {
+    return this.hand
+        .stream()
+        .anyMatch((PlayingCard card) -> {
+          return card.getSuit() == 'S' && card.getFace() == 12;
+        });
+  }
+
+  /**
+   * Takes in a collection of playing cards and returns the heart cards.
+   * 
+   * @return List of heart cards.
+   */
+  public List<String> getHeartCards() {
+    return this.hand
+        .stream()
+        .filter((PlayingCard card) -> {
+          return card.getSuit() == 'H';
+        }).map((PlayingCard card) -> {
+          return card.getAsString();
+        })
+        .toList();
+  }
+
+  /**
+   * Takes in a collection of playing cards and returns the sum of the cards.
+   * 
+   * @return The sum of the cards.
+   */
+  public int getSumOfHand() {
+    return this.hand
+        .stream()
+        .mapToInt((PlayingCard card) -> {
+          return card.getFace();
+        }).sum();
   }
 }
