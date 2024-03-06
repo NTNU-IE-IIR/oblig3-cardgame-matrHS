@@ -5,6 +5,8 @@ import edu.ntnu.matthew.DeckOfCards;
 import edu.ntnu.matthew.Hand;
 import javafx.application.Application;
 import javafx.css.Style;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -36,8 +38,8 @@ public class PokerCheck extends Application {
   }
   
   @Override
-  public void start(Stage stage) throws Exception{
-
+  public void start(Stage stage) throws Exception {
+    
     // Instantiates the poker deck
     this.deck = new DeckOfCards();
     
@@ -67,6 +69,11 @@ public class PokerCheck extends Application {
     Button deal = new Button("Deal Hand");
     deal.setMinWidth(90);
     cardButtons.getChildren().add(deal);
+    deal.setOnAction((ActionEvent event) -> {
+      this.dealCards();
+      
+    });
+    
     
     Button check = new Button("Check hand");
     check.setMinWidth(90);
