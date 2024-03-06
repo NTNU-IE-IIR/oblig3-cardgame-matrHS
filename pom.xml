@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- TODO: Sett din egen groupID og artifactID -->
-    <groupId>velg.en.fornuftig.groupID</groupId>
+    <groupId>edu.ntnu.matthew</groupId>
     <artifactId>CardGame</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -16,7 +16,32 @@
     </properties>
 
     <!-- TODO: Sett dine dependencies for JavaFX og JUnit5-testing -->
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <!-- TODO: Sett riktig versjon av nødvendige plugins -->
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>edu.ntnu.matthew.UI.PokerView</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
 </project>
